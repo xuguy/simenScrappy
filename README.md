@@ -6,9 +6,9 @@ This repository demonstrates the steps to run a web scraping project using the K
 
 ## Files Description
 
-1. **simenScrap.ipynb** and **scrap.py**: These are two runnable code files. Their content is essentially the same, but the `.ipynb` version is required for execution on Kaggle.
-2. **simenSteamID.csv**: This is a CSV file containing data of the first 1000 users of Simen. This file is deprecated and should not be used.
-3. **test-notebook.log** and **testOutputFile.csv**: These are the output files generated during the test run on Kaggle. We used the standard procedure to download these outputs from Kaggle by executing the command `kaggle kernels output xgy2718/test-notebook`.
+1. **`imenScrap.ipynb`** and **`scrap.py`**: These are two runnable code files. Their content is essentially the same, but the `.ipynb` version is required for execution on Kaggle.
+2. **`simenSteamID.csv`**: This is a CSV file containing data of the first 1000 users of Simen. This file is deprecated and should not be used.
+3. **`test-notebook.log`** and **`testOutputFile.csv`**: These are the output files generated during the test run on Kaggle. We used the standard procedure to download these outputs from Kaggle by executing the command `kaggle kernels output xgy2718/test-notebook`.
 
 ## Procedure
 
