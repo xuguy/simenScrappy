@@ -1,0 +1,11 @@
+{
+  "id": "xgy2718/simen-steam-id-scrapping",
+  "title": "simen Steam ID scrapping",
+  "code_file": "simenScrap.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "true"
+}
