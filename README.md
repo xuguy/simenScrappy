@@ -25,3 +25,10 @@ This repository demonstrates the steps to run a web scraping project using the K
 ## Conclusion
 
 While we couldn't run the web scraping code on Kaggle due to access restrictions, we were able to test the platform's environment and ensure the code's functionality. In the future, you might need to run the actual scraping on a server located in the same region as the target website or use a VPN/proxy to bypass regional access limitations.
+
+## Stage 2: Migrate project to Server
+
+1. get a Ali Cloud Ubuntu Server: `Ubuntu 20.24`->重置密码，设置密码，用于远程连接服务器
+2. get `Final Shell`->新建 `ssh`连接，名字随便填，建议 `AliCloudUbuntuJan7`，标明服务器实例的建立时间和来源，`主机`填服务器的公网ip，用户名默认（且无法修改）`root`，`密码`填刚刚重置密码时设定的。连接即可进入terminal
+3. `wget https://repo.anacond.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh` 用Linux命令下载安 `Anaconda`环境的安装包（安装完成后可以用 `rm`删除）
+4. 安装：`bash Anaconda3-2024.10-1-Linux-x86_64.sh`，按住 `Enter`，然后 `yes`，可以选择安装目录，但是我没选
