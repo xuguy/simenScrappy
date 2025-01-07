@@ -4,14 +4,14 @@ this .py file is dedicated for testing
 # load packages and define scrap function
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
+import time
 import pandas as pd
 
 # Function to scrape the desired text
 def scrape_steam_id(url,header,sleepTime=3):
     # Send a GET request to the URL
     response = requests.get(url,headers=header)
-    sleep(sleepTime)
+    time.sleep(sleepTime)
     
     # Check if the request was successful
     if response.status_code != 200:
@@ -41,28 +41,32 @@ fake_header = {  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 base_url = "http://203.135.101.236:47019/kztop//player.php?player={}"
 
 # scrapped url are stored in the following list:
-df_steamID = []
+if __name__ == '__main__':
+    df_steamID = []
 
-start = 1
-# stop to be set as the total number of players
-stop = 1000
+    start = int(input('start from:'))
+    # stop to be set as the total number of players
+    stop = int(input('end: '))
+    outFile = f'simenSteamID-{start}-{stop}.csv'
 
-# scrapping loop
-for i in range(start,stop+1):
-    url=base_url.format(i)
-    try:
-        steam_id = scrape_steam_id(url,header=fake_header)
-        if steam_id:
-            df_steamID.append(steam_id)
-            print(f"{i}: {steam_id}")
-        else:
-            df_steamID.append(f'NaN_{i}')
-            print(f"{i}: Steam ID not found.")
-    except Exception as e:
-        df_steamID.append(f'err_{i}')
-        print(f"error at {i}: {e}")
+    # scrapping loop
+    for i in range(start,stop+1):
+        url=base_url.format(i)
+        try:
+            start_time = time.time()
+            steam_id = scrape_steam_id(url,header=fake_header)
+            end_time = time.time()
+            if steam_id:
+                df_steamID.append(steam_id)
+                print(f"{i}/{stop-start+1}: {steam_id}-cost {end_time-start_time:.3f} s")
+            else:
+                df_steamID.append(f'NaN_{i}-time cost {end_time-start_time:.3f} s')
+                print(f"{i}/{stop-start+1}: Steam ID not found.")
+        except Exception as e:
+            df_steamID.append(f'err_{i}')
+            print(f"error at {i}/{stop-start+1}: {e}")
 
 
-# output
-simenSteamID = pd.DataFrame(df_steamID,index = range(1,len(df_steamID)+1))
-simenSteamID.to_csv('simenSteamID.csv')
+    # output
+    simenSteamID = pd.DataFrame(df_steamID,index = range(1,len(df_steamID)+1))
+    simenSteamID.to_csv(outFile)
