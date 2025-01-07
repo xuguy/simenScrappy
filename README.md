@@ -31,4 +31,20 @@ While we couldn't run the web scraping code on Kaggle due to access restrictions
 1. get a Ali Cloud Ubuntu Server: `Ubuntu 20.24`->重置密码，设置密码，用于远程连接服务器
 2. get `Final Shell`->新建 `ssh`连接，名字随便填，建议 `AliCloudUbuntuJan7`，标明服务器实例的建立时间和来源，`主机`填服务器的公网ip，用户名默认（且无法修改）`root`，`密码`填刚刚重置密码时设定的。连接即可进入terminal
 3. `wget https://repo.anacond.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh` 用Linux命令下载安 `Anaconda`环境的安装包（安装完成后可以用 `rm`删除）
-4. 安装：`bash Anaconda3-2024.10-1-Linux-x86_64.sh`，按住 `Enter`，然后 `yes`，可以选择安装目录，但是我没选
+4. 安装：`bash Anaconda3-2024.10-1-Linux-x86_64.sh`，按住 `Enter`，然后 `yes`，可以选择安装目录，但是我没选，安装完成后 `conda list`，确认环境安装结果
+5. 进入python环境（测试安装结果+生成密钥），`from jupyter_server.auth import passwd`->`passwd()`->输入两次一样密码，保存返回的密钥
+6. 退出python环境，进入安装目录（例如，如果默认安装在root，则进入root，`pwd`确认当前路径。`jupyter notebook --generate-config` 生成配置文件，生成的配置文件将位于 `/root/.jupyter\jupyter_notebook_config.py`
+7. 在FinalShell种手动打开生成的配置文件，在最后添加：
+   - `c.ServerApp.ip = '*'` #允许所有ip访问
+   - `c.ServerApp.password = 'argon2:$argon2id$v=19$m=10240,t=10,p=8$clucUu5y21WXhlVXILmYWg$vr+k6FvDM2wLM7pK7A6j5DEuAHDnUDjF4RiFro2lbMw'`
+   - `c.ServerApp.open_browser = False`
+   - `c.ServerApp.port = 8999`
+   - `c.ServerApp.allow_remote_access = True`
+8. 接着进入阿里云服务器实例页面，进入防火墙，添加规则，将上面的 `c.ServerApp.port=8999`的端口号8999添加，外部ip就可以访问了。
+9. 启动服务 `nohup jupyter notebook --allow-root`，服务将被挂在后台运行。
+10. 常见命令：
+    - `ps aux`列出所有进程
+    - `jupyter notebook list`列出所有正在运行的`notebook`
+    - `kill <processID>` kill掉某一个进程，`<processID>`可以用`ps aux`查看
+    - `jupyter notebook stop <portID>` 关闭某一个端口号对应的`jupyter server`
+    - `ps aux | grep jupyter` 用正则表达式找出含有"jupyter"的进程
