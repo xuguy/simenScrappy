@@ -8,9 +8,9 @@ import time
 import pandas as pd
 
 # Function to scrape the desired text
-def scrape_steam_id(url,header,sleepTime=3):
+def scrape_steam_id(url,header,sleepTime=3,timeOut = 10):
     # Send a GET request to the URL
-    response = requests.get(url,headers=header)
+    response = requests.get(url,headers=header,timeout=timeOut)
     time.sleep(sleepTime)
     
     # Check if the request was successful
@@ -66,7 +66,7 @@ if __name__ == '__main__':
         except Exception as e:
             end_time=time.time()
             df_steamID.append(f'err_{i}')
-            print(f"error at {i}/{stop-start+1}: {e}-cost{end_time-start_time:.3f}")
+            print(f"error at {i}/{stop-start+1}: {e}-cost {end_time-start_time:.3f}")
 
 
     # output
