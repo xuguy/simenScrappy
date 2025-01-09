@@ -71,6 +71,6 @@ if __name__ == '__main__':
 
     # output
     print('loop end, now ouput file')
-    simenSteamID = pd.DataFrame(df_steamID,index = range(1,len(df_steamID)+1))
+    simenSteamID = pd.DataFrame(df_steamID,index = range(start,stop+1))
     simenSteamID.to_csv(outFile)
     print(f'output at {outFile}')

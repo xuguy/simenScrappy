@@ -22,3 +22,12 @@ problem:
 1. we target webpage located in China, but kaggle not in China, so access through internet denied by targeted page. This means we cannot run our code on kaggle.
 
 2. so we give up running the web scrapping notebook on kaggle, but instead testing whether other codes are runnable and output as expected.
+
+
+# extracting the start and stop index
+You are a helpful assitance, and required to perform a text analysis task using python programming language.
+Suppose we have a list of files names (string), all of them have the format 'simenSteamID'-'start'-'stop'.csv, for example:
+
+'simenSteamID-1-10000.csv', 'simenSteamID-10001-20000.csv'
+
+are 2 file names. please write a python code to extract the start and stop number from the file names.
