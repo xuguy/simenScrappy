@@ -55,7 +55,7 @@ if __name__ == '__main__':
         start_time = time.time()
         try:
             
-            steam_id = scrape_steam_id(url,header=fake_header)
+            steam_id = scrape_steam_id(url,header=fake_header,timeOut=20)
             end_time = time.time()
             if steam_id:
                 df_steamID.append(steam_id)
