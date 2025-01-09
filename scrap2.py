@@ -2,10 +2,11 @@
 this .py file is dedicated for testing
 '''
 # load packages and define scrap function
-import requests
 from bs4 import BeautifulSoup
-import time
 import pandas as pd
+import requests, time
+
+import dataProcess
 
 # Function to scrape the desired text
 def scrape_steam_id(url,header,sleepTime=3,timeOut = 10):

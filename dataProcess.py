@@ -1,5 +1,16 @@
 '''
 this program needs to be run recursively, stop untill there is no more missing user data.
+
+function included:
+getDataFileNames():
+    input: None
+    output: dataNames<list>: full list of all data file names
+startStopRec(file):
+    input: file<str>: single file 
+    output: start<int>, stop<int>
+getMissingID(dataNames):
+    input: dataNames<list>: full list of all data file names
+    output: missing_id<pd.Series>: all userid of missing data
 '''
 
 import pandas as pd
