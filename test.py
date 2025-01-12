@@ -41,7 +41,7 @@ df_missing_id['steamid'] = '0'
 
 # start re-scrape, if pass test, use while True structure together with remainMissingCount(df_missing_id, total_count)>0
 # 10个以内，手动解决吧
-while remainMissingCount(df_missing_id,total_count)>10:
+while remainMissingCount(df_missing_id,total_count)>int(input('max tolerance: default input 30')):
     df_missing_id_tmp = df_missing_id.loc[df_missing_id['steamid']=='0']
     for i in df_missing_id_tmp.userid:
         url = base_url.format(i)
