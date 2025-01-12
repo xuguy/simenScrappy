@@ -20,9 +20,8 @@ import os, re
 # get data file names
 def getDataFileNames():
     curFileNames = os.listdir()
-    dataNames = [name for name in curFileNames if name.endswith('.csv')]
+    dataNames = [name for name in curFileNames if (name.endswith('.csv') and name.startswith('simenSteamID'))]
     return dataNames
-
 # due to flaws of scrap2.py, we cannot use the id within the data file but we have to extract start stop userid from the file name.
 
 # rec for 'recognize'
@@ -57,7 +56,11 @@ def getMissingID(dataNames):
     missing_id = pd.concat(missing_id_tmp)
     missing_id.reset_index(drop=True,inplace=True)
     return missing_id
+
 # del missing_id_tmp, df_steamID # release ram
+
+# Loop through the file names and extract start and stop numbers
+
 
 
 

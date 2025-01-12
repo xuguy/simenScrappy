@@ -8,6 +8,9 @@ import time
 # missing_id 包括了第一轮scrape所有的missingid，接下来重新遍历所有的missingid的steamid，每一次遍历间隔10分钟，直到missingid的数量=0
 dataNames = getDataFileNames()
 missing_id= getMissingID(dataNames)
+missing_id.to_csv('missing_id.csv')
+
+
 
 # count total number of userid
 total_count=0
@@ -17,7 +20,7 @@ for names in dataNames:
 
 # count the number of remaining missing number of steamid
 def remainMissingCount(df_missing_id, total_count):
-    remain_count = df_missing_id[df_missing_id['steamid']==0]['userid'].count()
+    remain_count = df_missing_id[df_missing_id['steamid']=='0']['userid'].count()
 
     missingPct = remain_count/total_count
     print(f'remain missing: {remain_count}, percentage of missing userid: {missingPct*100:.2f}% out of {total_count} users')
@@ -34,24 +37,29 @@ base_url = "http://203.135.101.236:47019/kztop//player.php?player={}"
 
 # initialize: set all steamid to be 0
 df_missing_id = pd.DataFrame({'userid':missing_id})
-df_missing_id['steamid'] = 0
+df_missing_id['steamid'] = '0'
 
 # start re-scrape, if pass test, use while True structure together with remainMissingCount(df_missing_id, total_count)>0
-df_missing_id_tmp = df_missing_id.loc[df_missing_id['steamid']==0]
-for i in df_missing_id_tmp.userid:
-    url = base_url.format(i)
-    start_time = time.time()
-    try:
-        steam_id = scrape_steam_id(url,header=fake_header,timeOut=20)
-        end_time = time.time()
-        if steam_id:
-            df_missing_id.loc[i,'steamid'] = steam_id
-            print(f"{i}/{stop-start+1}: {steam_id}-cost {end_time-start_time:.3f} s")
-        else:
-            print(f"{i}: Steam ID not found.")
-    except Exception as e:
-        end_time=time.time()
-        print(f"error at {i}: {e}-cost {end_time-start_time:.3f}")
+# 10个以内，手动解决吧
+while remainMissingCount(df_missing_id,total_count)>10:
+    df_missing_id_tmp = df_missing_id.loc[df_missing_id['steamid']=='0']
+    for i in df_missing_id_tmp.userid:
+        url = base_url.format(i)
+        start_time = time.time()
+        try:
+            steam_id = scrape_steam_id(url,header=fake_header,timeOut=20)
+            end_time = time.time()
+            if steam_id:
+                df_missing_id.loc[df_missing_id[df_missing_id['userid']==i].index[0],'steamid'] = steam_id
+                print(f"{i}/{stop-start+1}: {steam_id}-cost {end_time-start_time:.3f} s")
+            else:
+                print(f"{i}: Steam ID not found.")
+        except Exception as e:
+            end_time=time.time()
+            print(f"error at {i}: {e}-cost {end_time-start_time:.3f}")
+        df_missing_id.to_csv('missing_id_rescrape.csv')
+        remainMissingCount(df_missing_id,total_count)
+    
 
 
 # werid test: unable to acces simen locally.
