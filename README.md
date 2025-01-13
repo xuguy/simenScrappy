@@ -57,4 +57,4 @@ While we couldn't run the web scraping code on Kaggle due to access restrictions
 
 
 ## stage 4
-需要将代码改造为可日常更新。思路：用一个单独的txt保存数据，这样就可以单独往里面写入1行。
+需要将代码改造为可日常更新。思路：用一个单独的txt保存数据，这样就可以单独往里面写入1行。实现了逐行写入txt以后，可以把旧代码里面`.to_csv()`删除，不需要生成新的文件浪费空间。
