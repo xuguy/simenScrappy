@@ -31,3 +31,7 @@ Suppose we have a list of files names (string), all of them have the format 'sim
 'simenSteamID-1-10000.csv', 'simenSteamID-10001-20000.csv'
 
 are 2 file names. please write a python code to extract the start and stop number from the file names.
+
+
+#===================
+suppose now we have 2 pandas dataframe, 'df_simenID_full' and 'rescrape', both of them have the exactly the same 3 columns, 'origin_userid','steamid','userid'. However, 'df_simenID_full' has some string data in wrong format,  on the column 'steamid', we want to use the data of 'steamid' from the other dataframe 'rescrape' to replace those in 'df_simenID_full', for both dataframes, 'userid' is the unique identifier for both dataframes. Wrtie python code to solve this problem.
