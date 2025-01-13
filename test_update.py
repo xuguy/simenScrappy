@@ -40,10 +40,11 @@ df_missing_id = pd.DataFrame({'userid':missing_id})
 df_missing_id['steamid'] = '0'
 
 # start re-scrape, if pass test, use while True structure together with remainMissingCount(df_missing_id, total_count)>0
-# 10个以内，手动解决吧
-thres = int(input('max tolerance: default input 30'))
+# 30个以内，手动解决吧
+thres = 30#int(input('max tolerance: default input 30'))
 iter_outter = 0
-while remainMissingCount(df_missing_id,total_count)>thres:
+# 1 of 2 condition met, while loop end: either remaining missing value smaller than 30 or loop repeat for more than 3 times.
+while (remainMissingCount(df_missing_id,total_count)>thres and iter_outter<3):
     iter_outter +=1
     iter_inner = 0
     df_missing_id_tmp = df_missing_id.loc[df_missing_id['steamid']=='0']
@@ -56,14 +57,16 @@ while remainMissingCount(df_missing_id,total_count)>thres:
             end_time = time.time()
             if steam_id:
                 df_missing_id.loc[df_missing_id[df_missing_id['userid']==i].index[0],'steamid'] = steam_id
-                print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}: {steam_id}-cost {end_time-start_time:.3f} s")
+                print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}: {steam_id}-cost {end_time-start_time:.2f} s")
             else:
-                print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}: Steam ID not found.")
+                print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}: Steam ID not found -cost {end_time-start_time:.2f} s")
         except Exception as e:
             end_time=time.time()
-            print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}, error at {i}: {e}-cost {end_time-start_time:.3f}")
+            print(f"iter_in:{iter_inner}_{iter_outter}, curid:{i}, total: {total_count}, error at {i}: {e}-cost {end_time-start_time:.2f}")
         df_missing_id.to_csv('missing_id_rescrape.csv')
         remainMissingCount(df_missing_id,total_count)
+    print(f'======={iter_outter} end, sleep for 10min =======')
+    time.sleep(600)
     
 
 
@@ -75,11 +78,3 @@ while remainMissingCount(df_missing_id,total_count)>thres:
 #     print('err')
 # end_time = time.time()
 # print(f'{end_time-start_time}')
-
-
-
-
-
-    
-
-

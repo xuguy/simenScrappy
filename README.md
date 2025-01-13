@@ -48,3 +48,13 @@ While we couldn't run the web scraping code on Kaggle due to access restrictions
     - `kill <processID>` kill掉某一个进程，`<processID>`可以用`ps aux`查看
     - `jupyter notebook stop <portID>` 关闭某一个端口号对应的`jupyter server`
     - `ps aux | grep jupyter` 用正则表达式找出含有"jupyter"的进程
+  
+## stage 3
+代码已可用，请参照以下使用方法：
+- 先运行 `scrape2.py`，输入需要抓取的范围，程序运行结束后会生成 `simenSteamID-\<start>-\<stop>.csv`
+- 接下来运行 test_update.py，rescrape所有`simenSteamID-\<start>-\<stop>.csv`格式命名的数据集的缺失值，并输出到`missing_id_rescrape.csv`
+- 最后运行`dataCombine.py`，将scrape下来的数据以及rescrape缺失值的数据合并，并输出为`\<start>-\<stop>.csv`
+
+
+## stage 4
+需要将代码改造为可日常更新。思路：用一个单独的txt保存数据，这样就可以单独往里面写入1行。
