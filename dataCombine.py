@@ -4,10 +4,13 @@ import numpy as np
 
 dataNames = getDataFileNames()
 
-df_simenID = pd.read_csv(dataNames[1])
-start_id, stop_id = startStopRec(dataNames[1])
-df_simenID['userid'] = np.arange(start_id, stop_id+1)
-df_simenID.columns = ['origin_userid','steamid','userid']
+try:
+    df_simenID = pd.read_csv(dataNames[0])
+    start_id, stop_id = startStopRec(dataNames[0])
+    df_simenID['userid'] = np.arange(start_id, stop_id+1)
+    df_simenID.columns = ['origin_userid','steamid','userid']
+except Exception as e:
+    print(f'error: {e} - there should at least one data files in the curdir')
 
 # create an empty dataframe to store all processed ori data
 df_simenID_full = pd.DataFrame(columns=df_simenID.columns)
@@ -30,6 +33,6 @@ merged_df = df_simenID_full.merge(rescrape[['userid', 'steamid']], on='userid', 
 row_indexer = (merged_df['steamid'].str.startswith('STEAM_')==False)
 merged_df['steamid'].loc[row_indexer] = merged_df['steamid_rescrape'].loc[row_indexer]
 
-outputName = f'{merged_df.index.start+1}-{merged_df.index.stop}.csv'
+outputName = f'{merged_df.index.start+start_id}-{start_id+merged_df.index.stop-1}.csv'
 
 merged_df.to_csv(outputName)
