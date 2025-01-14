@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-def dataComebine():
+def dataCombine():
     dataNames = getDataFileNames()
 
     try:
@@ -44,4 +44,5 @@ def dataComebine():
     merged_df.to_csv(outputName)
     print(f'combined data output to {outputName}')
 
-# dataComebine()
+if __name__ == '__main__':
+    dataCombine()
